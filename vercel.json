@@ -1,0 +1,28 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "api/*.js",
+            "use": "@vercel/node"
+        },
+        {
+            "src": "public/**",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/api/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/public/$1"
+        }
+    ],
+    "env": {
+        "DB_CONNECTION_STRING": "postgresql://taskdb_owner:jeMHB6fSab7X@ep-black-darkness-a88bzqf3.eastus2.azure.neon.tech/taskdb?sslmode=require",
+        "SESSION_SECRET": "6F6FEC9A-D9B0-42A6-87EE-14A45C5CBB1A",
+        "JWT_SECRET": "6F6FEC9A-D9B0-42A6-87EE-14A45C5CBB1A"
+    }
+}

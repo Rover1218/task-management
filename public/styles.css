@@ -1,0 +1,524 @@
+.status-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.task-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.delete-btn {
+    float: right;
+    color: red;
+    cursor: pointer;
+}
+
+:root {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --bg-color: #f8f9fa;
+    --text-color: #333;
+    --sidebar-width: 250px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Fix sidebar z-index and positioning */
+.sidebar {
+    width: var(--sidebar-width);
+    background: linear-gradient(180deg, #2c3e50 0%, #3498db 100%);
+    padding: 2rem;
+    color: white;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
+.sidebar h1 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #ecf0f1;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar .nav-link {
+    color: #ecf0f1;
+    text-decoration: none;
+    display: block;
+    padding: 0.8rem 1rem;
+    margin: 0.5rem 0;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Updated Logout Button Styles */
+#logoutBtn {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 2rem;
+    background-color: #e74c3c;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: none;
+    /* Hidden by default */
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#logoutBtn:hover {
+    background-color: #c0392b;
+}
+
+#logoutBtn.visible {
+    display: block;
+}
+
+/* Ensure main content is properly aligned */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    padding: 20px;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.task-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Previous styles remain the same */
+/* Fix auth container width and centering */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: 80vh;
+}
+
+.auth-form {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    animation: fadeIn 0.3s ease-in;
+    margin: 0 auto;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.auth-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.auth-form p {
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    color: #666;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+.password-field input {
+    padding-right: 40px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    font-size: 16px;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.auth-form input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.auth-form label {
+    color: #555;
+    font-weight: 500;
+}
+
+.submit-btn {
+    width: 100%;
+    margin-top: 20px;
+}
+
+@media (max-width: 968px) {
+    .auth-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .auth-form {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+#taskForm {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.submit-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.submit-btn:hover {
+    background: var(--secondary-color);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .task-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.status-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.task-item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+.delete-btn {
+    float: right;
+    color: red;
+    cursor: pointer;
+}
+
+.form-switch {
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+}
+
+.form-switch a {
+    color: #4CAF50;
+    text-decoration: none;
+}
+
+.form-switch a:hover {
+    text-decoration: underline;
+}
+
+.task-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.task-section-header h2 {
+    color: var(--primary-color);
+    font-size: 2em;
+    margin: 0;
+}
+
+.task-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--primary-color);
+}
+
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.task-card h3 {
+    margin: 0 0 10px 0;
+    color: var(--text-color);
+}
+
+.task-card p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.task-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.task-priority {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8em;
+    font-weight: 500;
+}
+
+.priority-high {
+    background: #ffe5e5;
+    color: #ff4444;
+}
+
+.priority-medium {
+    background: #fff4e5;
+    color: #ff9900;
+}
+
+.priority-low {
+    background: #e5ffe5;
+    color: #44bb44;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.edit-btn {
+    background: #e3e6ff;
+    color: var(--primary-color);
+}
+
+.delete-btn {
+    background: #ffe5e5;
+    color: #ff4444;
+}
+
+/* Task Form Styles */
+#taskForm {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+#taskForm h3 {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.1);
+    outline: none;
+}
+
+#statusMessage {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideIn 0.3s ease-out;
+    display: none;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.error-message {
+    background-color: #f44336;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
