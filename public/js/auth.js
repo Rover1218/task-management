@@ -17,7 +17,7 @@ export class Auth {
         try {
             const formData = new FormData(event.target);
             console.log('Login request:', Object.fromEntries(formData)); // Log the request data
-            const response = await fetch('https://task-management-six-rust.vercel.app/login', {
+            const response = await fetch('/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -48,7 +48,7 @@ export class Auth {
         try {
             const formData = new FormData(event.target);
             console.log('Register request:', Object.fromEntries(formData)); // Log the request data
-            const response = await fetch('https://task-management-six-rust.vercel.app/register', {
+            const response = await fetch('/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -72,7 +72,7 @@ export class Auth {
             const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
             if (token) {
                 console.log('Logout request with token:', token); // Log the token
-                await fetch('https://task-management-six-rust.vercel.app/logout', {
+                await fetch('/logout', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`

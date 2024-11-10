@@ -86,7 +86,7 @@ setInterval(() => {
 }, 24 * 60 * 60 * 1000);
 
 // Routes
-app.post('/login', async (req, res) => {
+app.post('https://task-management-six-rust.vercel.app/login', async (req, res) => {
     console.log('POST /login'); // Log the route
     try {
         const { username, password } = req.body;
@@ -123,7 +123,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
-app.post('/register', async (req, res) => {
+app.post('https://task-management-six-rust.vercel.app/register', async (req, res) => {
     console.log('POST /register'); // Log the route
     try {
         const { username, email, password } = req.body;
@@ -146,7 +146,7 @@ app.post('/register', async (req, res) => {
 });
 
 // Add the logout route
-app.post('/logout', authenticateToken, (req, res) => {
+app.post('https://task-management-six-rust.vercel.app/logout', authenticateToken, (req, res) => {
     console.log('POST /logout'); // Log the route
     try {
         // Get the token from the authorization header
@@ -165,7 +165,7 @@ app.post('/logout', authenticateToken, (req, res) => {
     }
 });
 
-app.post('/logout', (req, res) => {
+app.post('https://task-management-six-rust.vercel.app/logout', (req, res) => {
     console.log('POST /logout'); // Log the route
     req.session.destroy(err => {
         if (err) {
@@ -176,7 +176,7 @@ app.post('/logout', (req, res) => {
     });
 });
 
-app.get('/getTasks', authenticateUser, async (req, res) => {
+app.get('https://task-management-six-rust.vercel.app/getTasks', authenticateUser, async (req, res) => {
     console.log('GET /getTasks'); // Log the route
     try {
         const result = await dbClient.query(
@@ -190,7 +190,7 @@ app.get('/getTasks', authenticateUser, async (req, res) => {
     }
 });
 
-app.post('/addTask', authenticateUser, async (req, res) => {
+app.post('https://task-management-six-rust.vercel.app/addTask', authenticateUser, async (req, res) => {
     console.log('POST /addTask'); // Log the route
     try {
         const { task_name, description, due_date, priority } = req.body;
@@ -205,7 +205,7 @@ app.post('/addTask', authenticateUser, async (req, res) => {
     }
 });
 
-app.delete('/deleteTask/:id', authenticateUser, async (req, res) => {
+app.delete('https://task-management-six-rust.vercel.app/deleteTask/:id', authenticateUser, async (req, res) => {
     console.log(`DELETE /deleteTask/${req.params.id}`); // Log the route
     try {
         const result = await dbClient.query(
@@ -225,7 +225,7 @@ app.delete('/deleteTask/:id', authenticateUser, async (req, res) => {
 });
 
 // Add before the error handling middleware
-app.get('/api/verify-token', authenticateToken, (req, res) => {
+app.get('https://task-management-six-rust.vercel.app/api/verify-token', authenticateToken, (req, res) => {
     console.log('GET /api/verify-token'); // Log the route
     res.json({
         valid: true,
