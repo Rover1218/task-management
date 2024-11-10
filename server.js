@@ -15,7 +15,7 @@ app.use((req, res, next) => {
     next();
 });
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://task-management-six-rust.vercel.app'],
     credentials: true
 }));
 app.use(express.json());
