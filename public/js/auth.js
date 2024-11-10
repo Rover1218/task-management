@@ -1,5 +1,6 @@
 export class Auth {
     constructor(statusMessageCallback, onLoginSuccess) {
+        this.API_BASE_URL = 'https://task-management-six-rust.vercel.app/api'; // Add base URL
         this.showMessage = statusMessageCallback;
         this.onLoginSuccess = onLoginSuccess;
         this.setupEventListeners();
@@ -15,7 +16,7 @@ export class Auth {
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch('/login', {
+            const response = await fetch(`${this.API_BASE_URL}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -44,7 +45,7 @@ export class Auth {
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch('/register', {
+            const response = await fetch(`${this.API_BASE_URL}/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -66,7 +67,7 @@ export class Auth {
         try {
             const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
             if (token) {
-                await fetch('/logout', {
+                await fetch(`${this.API_BASE_URL}/logout`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`
