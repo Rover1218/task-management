@@ -1,6 +1,6 @@
 export class Auth {
     constructor(statusMessageCallback, onLoginSuccess) {
-        this.API_BASE_URL = 'https://task-management-six-rust.vercel.app/api'; // Add base URL
+        this.API_BASE_URL = 'https://task-management-six-rust.vercel.app'; // Add base URL
         this.showMessage = statusMessageCallback;
         this.onLoginSuccess = onLoginSuccess;
         this.setupEventListeners();
