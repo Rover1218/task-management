@@ -1,6 +1,6 @@
 export class Auth {
     constructor(statusMessageCallback, onLoginSuccess) {
-        this.API_BASE_URL = 'https://task-management-six-rust.vercel.app'; // Add base URL
+        this.API_BASE_URL = 'https://task-management-six-rust.vercel.app/api'; // Add base URL
         this.showMessage = statusMessageCallback;
         this.onLoginSuccess = onLoginSuccess;
         this.setupEventListeners();
@@ -21,6 +21,12 @@ export class Auth {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
             });
+
+            if (!response.ok) {
+                // Log the error details
+                console.error(`Login request failed with status ${response.status}: ${response.statusText}`);
+            }
+
             const data = await response.json();
 
             if (data.success) {
@@ -37,6 +43,7 @@ export class Auth {
                 this.showMessage(data.message || 'Login failed', true);
             }
         } catch (error) {
+            console.error('Error during login:', error);
             this.showMessage('Error during login', true);
         }
     }
@@ -45,7 +52,7 @@ export class Auth {
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch(`${this.API_BASE_URL}/api/register`, {
+            const response = await fetch(`${this.API_BASE_URL}/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -67,7 +74,7 @@ export class Auth {
         try {
             const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
             if (token) {
-                await fetch(`${this.API_BASE_URL}/api/logout`, {
+                await fetch(`${this.API_BASE_URL}/logout`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`
