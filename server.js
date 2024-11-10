@@ -30,7 +30,10 @@ app.use(session({
 
 // Database connection
 const dbClient = new Client({
-    connectionString: process.env.DB_CONNECTION_STRING
+    connectionString: process.env.DB_CONNECTION_STRING,
+    ssl: {
+        rejectUnauthorized: false, // This setting allows SSL connections without verification.
+    },
 });
 
 dbClient.connect().catch(err => {
@@ -228,6 +231,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });
 
 // Graceful shutdown
