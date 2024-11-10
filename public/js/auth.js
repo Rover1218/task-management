@@ -1,6 +1,5 @@
 export class Auth {
     constructor(statusMessageCallback, onLoginSuccess) {
-        this.API_BASE_URL = 'https://task-management-six-rust.vercel.app/api'; // Add base URL
         this.showMessage = statusMessageCallback;
         this.onLoginSuccess = onLoginSuccess;
         this.setupEventListeners();
@@ -13,20 +12,16 @@ export class Auth {
     }
 
     async handleLogin(event) {
+        console.log('handleLogin called'); // Log method call
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch(`${this.API_BASE_URL}/api/login`, {
+            console.log('Login request:', Object.fromEntries(formData)); // Log the request data
+            const response = await fetch('/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
             });
-
-            if (!response.ok) {
-                // Log the error details
-                console.error(`Login request failed with status ${response.status}: ${response.statusText}`);
-            }
-
             const data = await response.json();
 
             if (data.success) {
@@ -43,16 +38,17 @@ export class Auth {
                 this.showMessage(data.message || 'Login failed', true);
             }
         } catch (error) {
-            console.error('Error during login:', error);
             this.showMessage('Error during login', true);
         }
     }
 
     async handleRegister(event) {
+        console.log('handleRegister called'); // Log method call
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch(`${this.API_BASE_URL}/register`, {
+            console.log('Register request:', Object.fromEntries(formData)); // Log the request data
+            const response = await fetch('/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -71,10 +67,12 @@ export class Auth {
     }
 
     async handleLogout() {
+        console.log('handleLogout called'); // Log method call
         try {
             const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
             if (token) {
-                await fetch(`${this.API_BASE_URL}/logout`, {
+                console.log('Logout request with token:', token); // Log the token
+                await fetch('/logout', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`

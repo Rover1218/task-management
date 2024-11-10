@@ -10,6 +10,10 @@ const jwt = require('jsonwebtoken');
 const app = express();
 
 // Middleware
+app.use((req, res, next) => {
+    console.log(`Requested URL: ${req.url}`); // Log the requested URL
+    next();
+});
 app.use(cors({
     origin: 'http://localhost:3000',
     credentials: true
@@ -83,6 +87,7 @@ setInterval(() => {
 
 // Routes
 app.post('/login', async (req, res) => {
+    console.log('POST /login'); // Log the route
     try {
         const { username, password } = req.body;
         const result = await dbClient.query('SELECT * FROM users WHERE username = $1', [username]);
@@ -119,6 +124,7 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/register', async (req, res) => {
+    console.log('POST /register'); // Log the route
     try {
         const { username, email, password } = req.body;
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -141,6 +147,7 @@ app.post('/register', async (req, res) => {
 
 // Add the logout route
 app.post('/logout', authenticateToken, (req, res) => {
+    console.log('POST /logout'); // Log the route
     try {
         // Get the token from the authorization header
         const authHeader = req.headers['authorization'];
@@ -159,6 +166,7 @@ app.post('/logout', authenticateToken, (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
+    console.log('POST /logout'); // Log the route
     req.session.destroy(err => {
         if (err) {
             res.status(500).json({ success: false, message: 'Error logging out' });
@@ -169,6 +177,7 @@ app.post('/logout', (req, res) => {
 });
 
 app.get('/getTasks', authenticateUser, async (req, res) => {
+    console.log('GET /getTasks'); // Log the route
     try {
         const result = await dbClient.query(
             'SELECT * FROM tasks WHERE user_id = $1 ORDER BY due_date ASC',
@@ -182,6 +191,7 @@ app.get('/getTasks', authenticateUser, async (req, res) => {
 });
 
 app.post('/addTask', authenticateUser, async (req, res) => {
+    console.log('POST /addTask'); // Log the route
     try {
         const { task_name, description, due_date, priority } = req.body;
         await dbClient.query(
@@ -196,6 +206,7 @@ app.post('/addTask', authenticateUser, async (req, res) => {
 });
 
 app.delete('/deleteTask/:id', authenticateUser, async (req, res) => {
+    console.log(`DELETE /deleteTask/${req.params.id}`); // Log the route
     try {
         const result = await dbClient.query(
             'DELETE FROM tasks WHERE id = $1 AND user_id = $2',
@@ -215,6 +226,7 @@ app.delete('/deleteTask/:id', authenticateUser, async (req, res) => {
 
 // Add before the error handling middleware
 app.get('/api/verify-token', authenticateToken, (req, res) => {
+    console.log('GET /api/verify-token'); // Log the route
     res.json({
         valid: true,
         user: req.user
