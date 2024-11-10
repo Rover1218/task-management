@@ -16,7 +16,7 @@ export class Auth {
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch(`${this.API_BASE_URL}/login`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -45,7 +45,7 @@ export class Auth {
         event.preventDefault();
         try {
             const formData = new FormData(event.target);
-            const response = await fetch(`${this.API_BASE_URL}/register`, {
+            const response = await fetch(`${this.API_BASE_URL}/api/register`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(Object.fromEntries(formData))
@@ -67,7 +67,7 @@ export class Auth {
         try {
             const token = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
             if (token) {
-                await fetch(`${this.API_BASE_URL}/logout`, {
+                await fetch(`${this.API_BASE_URL}/api/logout`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`
